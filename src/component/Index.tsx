@@ -4,7 +4,7 @@ import { useState } from 'react';
 // Main App component
 export default function Index() {
     // State variables to manage the component's data and UI
-    const [question, setQuestion] = useState("How does AI work?"); // Holds the user's question
+    const [question, setQuestion] = useState("Generate a limerick about flying. Make it melancholy and forgetfulnes but a little charming"); // Holds the user's question
     const [answer, setAnswer] = useState(""); // Holds the API's response
     const [isLoading, setIsLoading] = useState(false); // Tracks loading state
     const [error, setError] = useState<string | null>(null); // Holds any error messages
@@ -84,12 +84,12 @@ export default function Index() {
 
     // --- Render the Component ---
     return (
-        <div className="bg-gray-900 min-h-screen flex items-center justify-center font-sans text-white">
-            <div className="w-full max-w-6xl p-8 space-y-6 bg-gray-800 rounded-2xl shadow-lg">
+        <div className="bg-gray-900 min-h-screen flex flex-col font-sans text-white pb-10">
+            <div className="flex-grow w-full max-w-6xl mx-auto p-8 space-y-6">
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-teal-400">Ask Gemini</h1>
-                    <p className="mt-2 text-gray-400">Enter a question to query the Gemini API</p>
+                    <h1 className="text-4xl font-bold text-teal-400">Ask anything!</h1>
                 </div>
+
                 {/* --- Display Area for the Answer --- */}
                 {answer && (
                     <div className="p-6 mt-6 bg-gray-700/50 border border-gray-600 rounded-lg">
@@ -103,7 +103,17 @@ export default function Index() {
                     </div>
                 )}
 
-                {/* --- Input Form --- */}
+                {/* --- Display Area for Errors --- */}
+                {error && (
+                    <div className="p-4 mt-4 text-sm text-red-300 bg-red-900/50 border border-red-500/50 rounded-lg">
+                        <p className="font-semibold">An error occurred:</p>
+                        <p>{error}</p>
+                    </div>
+                )}
+            </div>
+
+            {/* --- Sticky Form at Bottom --- */}
+            <div className="sticky bottom-0 w-full max-w-6xl mx-auto px-8 py-6 rounded-lg">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="question-input" className="sr-only">Your Question</label>
@@ -112,7 +122,7 @@ export default function Index() {
                             type="text"
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
-                            placeholder="e.g., How does AI work?"
+                            placeholder="hey"
                             className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none transition"
                             required
                         />
@@ -125,17 +135,8 @@ export default function Index() {
                         {isLoading ? 'Thinking...' : 'Ask'}
                     </button>
                 </form>
-
-                {/* --- Display Area for Errors --- */}
-                {error && (
-                    <div className="p-4 mt-4 text-sm text-red-300 bg-red-900/50 border border-red-500/50 rounded-lg">
-                        <p className="font-semibold">An error occurred:</p>
-                        <p>{error}</p>
-                    </div>
-                )}
-
-
             </div>
         </div>
     );
+
 }
