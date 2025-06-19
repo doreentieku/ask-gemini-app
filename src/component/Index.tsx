@@ -4,7 +4,7 @@ import { useState } from 'react';
 // Main App component
 export default function Index() {
     // State variables to manage the component's data and UI
-    const [question, setQuestion] = useState("Generate a limerick about flying. Make it melancholy and forgetfulnes but a little charming"); // Holds the user's question
+    const [question, setQuestion] = useState(""); // Holds the user's question
     const [answer, setAnswer] = useState(""); // Holds the API's response
     const [isLoading, setIsLoading] = useState(false); // Tracks loading state
     const [error, setError] = useState<string | null>(null); // Holds any error messages
@@ -85,7 +85,8 @@ export default function Index() {
     // --- Render the Component ---
     return (
         <div className="bg-gray-900 min-h-screen flex flex-col font-sans text-white pb-10">
-            <div className="flex-grow w-full max-w-6xl mx-auto p-8 space-y-6">
+            {/* Scrollable content wrapper above sticky form */}
+            <div className="flex-grow w-full max-w-6xl mx-auto p-8 space-y-6 overflow-y-auto max-h-[calc(100vh-200px)]">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-teal-400">Ask anything!</h1>
                 </div>
@@ -113,7 +114,7 @@ export default function Index() {
             </div>
 
             {/* --- Sticky Form at Bottom --- */}
-            <div className="sticky bottom-0 w-full max-w-6xl mx-auto px-8 py-6 rounded-lg">
+            <div className="sticky bottom-0 w-full max-w-6xl mx-auto px-8 py-6 z-10">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="question-input" className="sr-only">Your Question</label>
@@ -122,7 +123,7 @@ export default function Index() {
                             type="text"
                             value={question}
                             onChange={(e) => setQuestion(e.target.value)}
-                            placeholder="hey"
+                            placeholder="Ask a question"
                             className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none transition"
                             required
                         />
